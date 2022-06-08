@@ -1,11 +1,15 @@
-#
-# This is the server logic of a Shiny web application. You can run the
-# application by clicking 'Run App' above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
+## Belle Park BioBlitz server.R
+##
+## Server functions for the R Shiny dashboard
+##
+## Leaflet map filtered by iNaturalist 'iconic_taxon_name'
+##  and day-of-week slider controls
+## 
+## inat_obs_df.rds created from separate iNaturalist API query
+##  via package 'rinat'
+## 
+## Created by: Donovan Bangs
+## Last Updated: 08 June 2022
 
 library(shiny)
 library(leaflet)
@@ -59,8 +63,6 @@ plotMap <- function(taxon_name = NULL,
     
     leaflet(sf) %>% 
         addTiles() %>% 
-        # Code to keep map at current bounds with new input.
-        #fitBounds(-76.46537339327705, 44.24732617607908, -76.4834351150543, 44.25501623280483) %>%
         addCircleMarkers(data = sf,
                          lng = ~longitude, lat = ~latitude,
                          popup = paste0("<p><b>", sf$common_name, "</b><br/>",

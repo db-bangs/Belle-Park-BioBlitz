@@ -1,11 +1,14 @@
-#
-# This is the user-interface definition of a Shiny web application. You can
-# run the application by clicking 'Run App' above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
+## Belle Park BioBlitz ui.R
+##
+## User Interface controls for the R Shiny dashboard
+##
+## Leaflet map filtered by iNaturalist 'iconic_taxon_name'
+##  and day-of-week slider controls
+##
+## Data table of all observations on separate tab
+## 
+## Created by: Donovan Bangs
+## Last Updated: 08 June 2022
 
 library(shiny)
 library(leaflet)
