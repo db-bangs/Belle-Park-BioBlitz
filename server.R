@@ -15,8 +15,8 @@ library(shiny)
 library(leaflet)
 library(htmltools)
 
-github_url <- a("GitHub Repo", href="https://github.com/db-bangs/Belle-Park-BioBlitz")
-belle_park_url <- a("Belle Park Project", href="https://belleparkproject.com/events/bioblitz")
+github_url <- a("GitHub Repo", href="https://github.com/db-bangs/Belle-Park-BioBlitz", target = "_blank")
+belle_park_url <- a("Belle Park Project", href="https://belleparkproject.com/events/bioblitz", target = "_blank")
 
 
 load("inat_obs_df.rds")
