@@ -11,14 +11,16 @@
 ## Created by: Donovan Bangs
 ## Last Updated: 08 June 2022
 
+## Initialize Libraries
 library(shiny)
 library(leaflet)
 library(htmltools)
 
+## Set link URLs
 github_url <- a("GitHub Repo", href="https://github.com/db-bangs/Belle-Park-BioBlitz", target = "_blank")
 belle_park_url <- a("Belle Park Project", href="https://belleparkproject.com/events/bioblitz", target = "_blank")
 
-
+## Load iNat data RDS
 load("inat_obs_df.rds")
 sf <- inat_obs_df
 
