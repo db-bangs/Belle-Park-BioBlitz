@@ -88,11 +88,15 @@ shinyServer(function(input, output){
                                         "Licence: ", filteredData()$license, "</p",
                                         "<p><img src='", filteredData()$image_url, "' style='width:100%;'/></p>"),
                          color = ~pal(filteredData()$iconic_taxon_name),
-                         radius = 5)
+                         opacity = 1.0,
+                         radius = 5) %>%
+        clearControls() %>%
+        addLegend(position = "bottomright",
+                  pal = pal,
+                  values = filteredData()$iconic_taxon_name)
     })
     
-    
-    
+
     output$table <- renderDataTable(sf_table)
     
     output$belle_park <- renderUI({
