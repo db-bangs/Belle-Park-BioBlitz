@@ -13,6 +13,7 @@
 
 ## Initialize Libraries
 library(shiny)
+library(shinyWidgets)
 library(leaflet)
 library(htmltools)
 
@@ -57,35 +58,40 @@ pal <- colorFactor(
 
 
 
-plotMap <- function(taxon_name = NULL,
-                    dates = NULL){
-    
-    sf <- sf[sf$iconic_taxon_name %in% taxon_name,]
-    sf <- sf[sf$observed_on >= min(dates) & sf$observed_on <= max(dates),]
-    
-    leaflet(sf) %>% 
-        addTiles() %>% 
-        addCircleMarkers(data = sf,
-                         lng = ~longitude, lat = ~latitude,
-                         popup = paste0("<p><b>", sf$common_name, "</b><br/>",
-                                        "<i>", sf$scientific_name, "</i><br/>",
-                                        "<i>", sf$iconic_taxon_name, "</i></p>",
-                                        "<p>Observed: ", sf$observed_on, "<br/>",
-                                        "User: ", sf$user_login, "<br/>",
-                                        "Licence: ", sf$license, "</p",
-                                        "<p><img src='", sf$image_url, "' style='width:100%;'/></p>"),
-                         color = ~pal(iconic_taxon_name),
-                         radius = 5)
-}
+
 
 shinyServer(function(input, output){
+  
+  filteredData <- reactive({
+    sf[sf$iconic_taxon_name %in% input$taxon_name & 
+       sf$observed_on >= min(input$dates) &
+       sf$observed_on <= max(input$dates),]
+  })
     
     
     output$map <- renderLeaflet({
-        leaflet(sf) %>% addTiles()
-        plotMap(input$taxon_name,
-                input$dates)
+        leaflet(sf) %>% addTiles() %>%
+        fitBounds(~min(longitude), ~min(latitude), ~max(longitude), ~max(latitude))
     })
+    
+    ## An observer to draw the filtered points
+    observe({
+        leafletProxy("map") %>%
+        clearMarkers() %>%
+        addCircleMarkers(data = filteredData(),
+                         lng = ~longitude, lat = ~latitude,
+                         popup = paste0("<p><b>", filteredData()$common_name, "</b><br/>",
+                                        "<i>", filteredData()$scientific_name, "</i><br/>",
+                                        "<i>", filteredData()$iconic_taxon_name, "</i></p>",
+                                        "<p>Observed: ", filteredData()$observed_on, "<br/>",
+                                        "User: ", filteredData()$user_login, "<br/>",
+                                        "Licence: ", filteredData()$license, "</p",
+                                        "<p><img src='", filteredData()$image_url, "' style='width:100%;'/></p>"),
+                         color = ~pal(filteredData()$iconic_taxon_name),
+                         radius = 5)
+    })
+    
+    
     
     output$table <- renderDataTable(sf_table)
     

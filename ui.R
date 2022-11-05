@@ -11,6 +11,7 @@
 ## Last Updated: 08 June 2022
 
 library(shiny)
+library(shinyWidgets)
 library(leaflet)
 library(DT)
 
@@ -44,10 +45,11 @@ shinyUI(fluidPage(
                                as.Date("2022-05-29")),
                       timeFormat="%A-%d"),
             
-          checkboxGroupInput("taxon_name", 
-                              label = "Taxon Name:",
-                              choices = taxons,
-                              selected = taxons),
+          pickerInput("taxon_name", 
+                      label = "Taxon Name:",
+                      choices = taxons,
+                      selected = NULL,
+                      options = list(`actions-box` = TRUE),multiple = T),
           br(),
           p("This dashboard was developed by Donovan Bangs using R Shiny. See the
             GitHub Repo linked below for more details."),
