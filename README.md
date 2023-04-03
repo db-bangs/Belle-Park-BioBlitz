@@ -7,4 +7,4 @@ This R Shiny dashboard displays a map of all observations filter-able by taxon a
 
 iNaturalist user-indicated licensing, typically CC-BY-NC, is attached to observations where applicable.
 
-*In Progress 08 June 2022*
+*Last Updated April 3, 2023*
